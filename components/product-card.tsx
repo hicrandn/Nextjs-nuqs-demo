@@ -9,6 +9,7 @@ import {
 import { Product } from "@/types/product";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
 import { ShoppingCart } from "lucide-react";
 
 interface ProductCardProps {
@@ -18,7 +19,10 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Card key={product.id} className="flex flex-col justify-between p-0">
-      <CardHeader className="p-0">
+      <CardHeader className="p-0 relative">
+        <Badge className="absolute top-2 right-2">
+          {product.category.name}
+        </Badge>
         <Image
           src={product.images[0]}
           alt={product.title}

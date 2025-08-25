@@ -1,6 +1,6 @@
 "use server";
 
-import { Product } from "@/types/product";
+import { Product } from "@/types";
 
 type GetProductsProps = {
   search?: string;

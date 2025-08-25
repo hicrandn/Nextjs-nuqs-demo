@@ -21,12 +21,12 @@ export default function ProductFilter() {
           type="text"
           value={search ?? ""}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search "
+          placeholder="Search products by title"
         />
       </div>
       <Select>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Items per page" />
+          <SelectValue placeholder="Products per page" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="10">10</SelectItem>

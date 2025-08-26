@@ -1,18 +1,23 @@
 "use client";
 import { Input } from "./ui/input";
 import { useQueryState } from "nuqs";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-export default function ProductFilter() {
+interface MovieFilterProps {
+  refetchProducts: () => Promise<void>;
+}
+
+export default function MovieFilter({ refetchProducts }: MovieFilterProps) {
   const [search, setSearch] = useQueryState("search", {
     defaultValue: "",
   });
+
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    setTimeout(() => {
+      refetchProducts();
+    }, 300);
+  };
+
   return (
     <div className="flex justify-between ">
       <div>
@@ -20,21 +25,10 @@ export default function ProductFilter() {
           className="w-[300px]"
           type="text"
           value={search ?? ""}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search products by title"
+          onChange={(e) => handleSearch(e.target.value)}
+          placeholder="Film adı ile ara..."
         />
       </div>
-      <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Products per page" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="10">10</SelectItem>
-          <SelectItem value="20">20</SelectItem>
-          <SelectItem value="30">30</SelectItem>
-          <SelectItem value="40">40</SelectItem>
-        </SelectContent>
-      </Select>
     </div>
   );
 }

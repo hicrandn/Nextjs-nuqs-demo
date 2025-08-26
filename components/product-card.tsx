@@ -6,49 +6,64 @@ import {
   CardContent,
   CardFooter,
 } from "./ui/card";
-import { Product } from "@/types/product";
+import type { Movie } from "@/types";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { ShoppingCart } from "lucide-react";
+import { Star, Play } from "lucide-react";
 
-interface ProductCardProps {
-  product: Product;
+interface MovieCardProps {
+  movie: Movie;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function MovieCard({ movie }: MovieCardProps) {
   return (
-    <Card key={product.id} className="flex flex-col justify-between p-0">
+    <Card key={movie.imdbID} className="flex flex-col justify-between p-0">
       <CardHeader className="p-0 relative">
-        <Badge className="absolute top-2 right-2">
-          {product.category.name}
-        </Badge>
+        <Badge className="absolute top-2 right-2">{movie.Year}</Badge>
         <Image
-          src={product.images[0]}
-          alt={product.title}
+          src={movie.Poster !== "N/A" ? movie.Poster : "/placeholder-movie.jpg"}
+          alt={movie.Title}
           width={300}
-          height={300}
-          className="w-full h-full object-cover rounded-t-lg"
+          height={450}
+          className="w-full h-[450px] object-cover rounded-t-lg"
         />
         <div className="px-4 pt-4">
           <CardTitle className="text-left min-h-[3rem] flex items-start leading-tight">
-            {product.title}
+            {movie.Title}
           </CardTitle>
         </div>
       </CardHeader>
       <div className="flex-1">
         <CardContent className="px-4">
-          <p className="text-lg font-bold text-left">${product.price}</p>
+          <div className="flex items-center gap-2 mb-2">
+            {movie.imdbRating && (
+              <>
+                <Star className="size-4 fill-yellow-400 text-yellow-400" />
+                <span className="font-semibold">{movie.imdbRating}</span>
+              </>
+            )}
+          </div>
           <CardDescription className="text-left">
-            {product.description}
+            {movie.Plot || "Açıklama mevcut değil"}
           </CardDescription>
+          {movie.Genre && (
+            <p className="text-sm text-muted-foreground mt-2">
+              <strong>Tür:</strong> {movie.Genre}
+            </p>
+          )}
+          {movie.Director && (
+            <p className="text-sm text-muted-foreground">
+              <strong>Yönetmen:</strong> {movie.Director}
+            </p>
+          )}
         </CardContent>
       </div>
       <div className="px-4 pb-4">
         <CardFooter className="p-0">
           <Button className="w-full">
-            <ShoppingCart className="size-4" />
-            Add to Cart
+            <Play className="size-4 mr-2" />
+            Detayları Gör
           </Button>
         </CardFooter>
       </div>

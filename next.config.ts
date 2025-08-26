@@ -6,16 +6,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**", //tüm httplere izin ver
+        hostname: "**",
       },
-      // {
+      //{
       //   protocol: "https",
       //   hostname: "i.imgur.com",
       // },
       // {
-      //   protocol: "https",
-      //   hostname: "placeimg.com",
-      // },
       // {
       //   protocol: "https",
       //   hostname: "placehold.co",

@@ -10,13 +10,33 @@ type GetMoviesProps = {
 
 const OMDB_API_KEY = process.env.OMDB_API_KEY;
 
+const getMovieDetails = async (imdbID: string): Promise<Movie> => {
+  if (!OMDB_API_KEY) {
+    throw new Error("OMDB API key is not configured");
+  }
+
+  const response = await fetch(
+    `http://www.omdbapi.com/?i=${imdbID}&apikey=${OMDB_API_KEY}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const data = await response.json();
+  return data;
+};
+
 const getMovies = unstable_cache(
   async (params: GetMoviesProps): Promise<Movie[]> => {
+    const { search } = params;
     if (!OMDB_API_KEY) {
       throw new Error("OMDB API key is not configured");
     }
+    const searchQuery = search || ""; // Varsayılan arama
 
-    const searchQuery = search || "batman"; // Varsayılan arama
     const response = await fetch(
       `http://www.omdbapi.com/?s=${encodeURIComponent(
         searchQuery
@@ -35,8 +55,7 @@ const getMovies = unstable_cache(
       return [];
     }
 
-    // İlk itemsPerPage kadar filmi döndür
-    return data.Search.slice(0, itemsPerPage);
+    return data.Search;
   },
   ["movies"]
 );

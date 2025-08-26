@@ -3,7 +3,7 @@ import { createLoader, parseAsInteger, parseAsString } from "nuqs/server";
 // Describe your search params, and reuse this in useQueryStates / createSerializer:
 export const coordinatesSearchParams = {
   search: parseAsString.withDefault(""),
-  itemsPerPage: parseAsInteger.withDefault(10),
+  name: parseAsString.withDefault(""),
 };
 
 export const loadSearchParams = createLoader(coordinatesSearchParams);

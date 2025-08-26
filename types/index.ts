@@ -10,6 +10,13 @@ export interface Movie {
   Genre?: string;
   Runtime?: string;
   imdbRating?: string;
+  Language?: string;
+  Country?: string;
+  Awards?: string;
+  Metascore?: string;
+  BoxOffice?: string;
+  Production?: string;
+  Website?: string;
 }
 
 export interface OMDBResponse {

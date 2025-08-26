@@ -10,7 +10,15 @@ import type { Movie } from "@/types";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { Star, Play } from "lucide-react";
+import {
+  Star,
+  Play,
+  Clock,
+  Users,
+  Globe,
+  Award,
+  DollarSign,
+} from "lucide-react";
 
 interface MovieCardProps {
   movie: Movie;
@@ -43,19 +51,61 @@ export default function MovieCard({ movie }: MovieCardProps) {
                 <span className="font-semibold">{movie.imdbRating}</span>
               </>
             )}
+            {movie.Metascore && (
+              <Badge variant="secondary" className="text-xs">
+                Meta: {movie.Metascore}
+              </Badge>
+            )}
           </div>
           <CardDescription className="text-left">
-            {movie.Plot || "Açıklama mevcut değil"}
+            {movie.Plot || "No description available"}
           </CardDescription>
           {movie.Genre && (
             <p className="text-sm text-muted-foreground mt-2">
-              <strong>Tür:</strong> {movie.Genre}
+              <strong>Genre:</strong> {movie.Genre}
             </p>
           )}
           {movie.Director && (
             <p className="text-sm text-muted-foreground">
-              <strong>Yönetmen:</strong> {movie.Director}
+              <strong>Director:</strong> {movie.Director}
             </p>
+          )}
+          {movie.Actors && (
+            <p className="text-sm text-muted-foreground">
+              <strong>Cast:</strong> {movie.Actors}
+            </p>
+          )}
+          <div className="flex flex-wrap gap-2 mt-2">
+            {movie.Runtime && (
+              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                <Clock className="size-3" />
+                <span>{movie.Runtime}</span>
+              </div>
+            )}
+            {movie.Language && (
+              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                <Globe className="size-3" />
+                <span>{movie.Language}</span>
+              </div>
+            )}
+            {movie.Country && (
+              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                <span>🌍</span>
+                <span>{movie.Country}</span>
+              </div>
+            )}
+          </div>
+          {movie.Awards && movie.Awards !== "N/A" && (
+            <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+              <Award className="size-3" />
+              <span className="truncate">{movie.Awards}</span>
+            </div>
+          )}
+          {movie.BoxOffice && movie.BoxOffice !== "N/A" && (
+            <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+              <DollarSign className="size-3" />
+              <span>{movie.BoxOffice}</span>
+            </div>
           )}
         </CardContent>
       </div>
@@ -63,7 +113,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
         <CardFooter className="p-0">
           <Button className="w-full">
             <Play className="size-4 mr-2" />
-            Detayları Gör
+            View Details
           </Button>
         </CardFooter>
       </div>
